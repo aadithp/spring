@@ -1,8 +1,11 @@
 package com.example.backgroundFunction;
+import org.springframework.data.redis.core.RedisHash;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "countries")
+@RedisHash("Country")
 public class Country extends AuditModel {
     @Id
     @GeneratedValue(generator = "country_generator")
@@ -11,6 +14,7 @@ public class Country extends AuditModel {
             sequenceName = "country_sequence",
             initialValue = 1
     )
+
     private Long id;
 
     private String name;

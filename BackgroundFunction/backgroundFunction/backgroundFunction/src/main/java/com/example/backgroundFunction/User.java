@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.redis.core.RedisHash;
 
 @Entity
 @Table(name = "users")
+@RedisHash("User")
 public class User extends AuditModel {
     @Id
     @GeneratedValue(generator = "user_generator")

@@ -14,35 +14,27 @@ import java.util.List;
 public class CountryController {
 
     @Autowired
-    private CountryRepository countryRepository;
+    private CountryService countryService;
 
     @GetMapping("/countries")
     public Page<Country> getCountries(Pageable pageable) {
-        return countryRepository.findAll(pageable);
+        return this.countryService.getCountries(pageable);
     }
 
     @PostMapping("/countries")
     public Country createCountry(@RequestBody Country country) {
-        return countryRepository.save(country);
+        return this.countryService.createCountry(country);
     }
 
     @PutMapping("/countries/{countryId}")
     public Country updateCountry(@PathVariable Long countryId,
                                   @RequestBody Country countryRequest) {
-        return countryRepository.findById(countryId)
-                .map(country -> {
-                    country.setName(countryRequest.getName());
-                    return countryRepository.save(country);
-                }).orElseThrow(() -> new ResourceNotFoundException("Country not found with id " + countryId));
+        return this.countryService.updateCountry(countryId, countryRequest);
     }
 
 
     @DeleteMapping("/countries/{countryId}")
     public ResponseEntity<?> deleteCountry(@PathVariable Long countryId) {
-        return countryRepository.findById(countryId)
-                .map(country -> {
-                    countryRepository.delete(country);
-                    return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new ResourceNotFoundException("Country not found with id " + countryId));
+        return this.countryService.deleteCountry(countryId);
     }
 }
