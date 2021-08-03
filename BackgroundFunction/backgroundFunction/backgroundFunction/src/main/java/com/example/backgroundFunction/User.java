@@ -1,38 +1,52 @@
 package com.example.backgroundFunction;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
-@Entity //Tells Hibernate to make a table out of this class
-public class User {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+@Entity
+@Table(name = "users")
+public class User extends AuditModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(generator = "user_generator")
+    @SequenceGenerator(
+            name = "user_generator",
+            sequenceName = "user_sequence",
+            initialValue = 1
+    )
+    private Long id;
+
+    @Column(columnDefinition = "name")
     private String name;
-    private String email;
 
-    public Integer getId() {
-        return id;
-    }
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "countryId", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Country country;
 
-    public void setID(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Long getId() {
+        return id;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public Country getCountry() {
+        return country;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public String getName() {
+        return name;
     }
 }
