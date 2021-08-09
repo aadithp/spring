@@ -7,6 +7,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import java.util.Map;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
 
     @Autowired
     private CountryRepository countryRepository;
@@ -36,10 +39,10 @@ public class UserService {
                 .getCountry().getId());
     }
 
-    @Cacheable(cacheNames = "users", key = "#id", unless = "#result == null")
-    public List<User> getUsersByCountryId(Long countryId) {
-        return userRepository.findByCountryId(countryId);
-    }
+//    @Cacheable(cacheNames = "users", key = "#country.id", unless = "#result == null")
+//    public List<User> getUsersByCountryId(Long countryId) {
+//        return userRepository.(countryId);
+//    }
 
     @CacheEvict(cacheNames = "users", allEntries = true)
     public User addUser(Long countryId,

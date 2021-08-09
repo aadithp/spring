@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS countries CASCADE;
+CREATE TABLE countries(id bigint PRIMARY KEY, name VARCHAR(255) NOT NULL);

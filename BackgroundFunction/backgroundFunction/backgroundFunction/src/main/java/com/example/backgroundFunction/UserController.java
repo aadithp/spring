@@ -23,10 +23,10 @@ public class UserController {
         return this.userService.getUser(userId);
     }
 
-    @GetMapping("/countries/{countryId}/users")
-    public List<User> getUsersByCountryId(@PathVariable Long countryId) {
-        return userService.getUsersByCountryId(countryId);
-    }
+//    @GetMapping("/countries/{countryId}/users")
+//    public List<User> getUsersByCountryId(@PathVariable Long countryId) {
+//        return userService.getUsersByCountryId(countryId);
+//    }
 
     @PostMapping("/countries/{countryId}/users")
     public User addUser(@PathVariable Long countryId,

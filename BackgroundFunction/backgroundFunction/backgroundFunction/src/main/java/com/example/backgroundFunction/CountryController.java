@@ -17,8 +17,8 @@ public class CountryController {
     private CountryService countryService;
 
     @GetMapping("/countries")
-    public Page<Country> getCountries(Pageable pageable) {
-        return this.countryService.getCountries(pageable);
+    public List<Country> getCountries() {
+        return this.countryService.getCountries();
     }
 
     @PostMapping("/countries")

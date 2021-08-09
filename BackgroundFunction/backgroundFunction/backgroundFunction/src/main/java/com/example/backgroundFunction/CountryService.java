@@ -16,22 +16,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 @Service
-@CacheConfig(cacheNames = "countryCache")
+//@CacheConfig(cacheNames = "countryCache")
 public class CountryService {
     @Autowired
     private CountryRepository countryRepository;
 
-    @Cacheable(cacheNames = "countries")
-    public Page<Country> getCountries(Pageable pageable) {
-        return countryRepository.findAll(pageable);
+//    @Cacheable(cacheNames = "countries")
+    public List<Country> getCountries() {
+        return countryRepository.findAll();
     }
 
-    @CacheEvict(cacheNames = "countries", allEntries = true)
+//    @CacheEvict(cacheNames = "countries", allEntries = true)
     public Country createCountry(Country country) {
         return countryRepository.save(country);
     }
 
-    @CacheEvict(cacheNames = "countries", allEntries = true)
+//    @CacheEvict(cacheNames = "countries", allEntries = true)
     public Country updateCountry(Long countryId,
                                  Country countryRequest) {
         return countryRepository.findById(countryId)
@@ -42,8 +42,8 @@ public class CountryService {
     }
 
 
-    @Caching(evict = { @CacheEvict(cacheNames = "country", key = "#countryId"),
-            @CacheEvict(cacheNames = "countries", allEntries = true) })
+//    @Caching(evict = { @CacheEvict(cacheNames = "country", key = "#countryId"),
+//            @CacheEvict(cacheNames = "countries", allEntries = true) })
     public ResponseEntity<?> deleteCountry(Long countryId) {
         return countryRepository.findById(countryId)
                 .map(country -> {
